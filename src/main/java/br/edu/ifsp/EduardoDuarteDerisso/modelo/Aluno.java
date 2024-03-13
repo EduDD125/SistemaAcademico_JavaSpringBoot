@@ -1,5 +1,6 @@
-package br.edu.ifsp.EduardoDuarteDerisso;
+package br.edu.ifsp.EduardoDuarteDerisso.modelo;
 
+import br.edu.ifsp.EduardoDuarteDerisso.util.StatuAluno;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -16,6 +17,8 @@ public class Aluno {
     private BigDecimal nota1;
     private BigDecimal nota2;
     private BigDecimal nota3;
+
+    public Aluno() {}
 
     public Aluno(String nome, String ra, String email, BigDecimal nota1, BigDecimal nota2, BigDecimal nota3) {
         this.nome = nome;
@@ -72,5 +75,27 @@ public class Aluno {
 
     public void setNota3(BigDecimal nota3) {
         this.nota3 = nota3;
+    }
+    public BigDecimal setMedia(BigDecimal nota1, BigDecimal nota2,BigDecimal nota3) {
+        BigDecimal soma = nota1.add(nota2).add(nota3);
+        BigDecimal quantidade = new BigDecimal("3");
+        BigDecimal media = soma.divide(quantidade);
+        return media;
+    }
+    public StatuAluno setStatus(BigDecimal media) {
+        BigDecimal notaMinAprovado = new BigDecimal(6);
+        BigDecimal notaMinRecuperacao = new BigDecimal(4);
+
+        if (media.compareTo(notaMinAprovado) >= 0) return StatuAluno.APROVADOR;
+        if (media.compareTo(notaMinRecuperacao) >= 0) return StatuAluno.RECUPERACAO;
+        return StatuAluno.REPROVADO;
+    }
+
+    @Override
+    public String toString() {
+        return  "Nome: '" + nome + '\n' +
+                ", RA: '" + ra + '\n' +
+                ", Email: '" + email + '\n' +
+                ", Notas: " + nota1 + " | " + nota2 + " | " + nota3 ;
     }
 }
