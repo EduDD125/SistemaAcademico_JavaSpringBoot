@@ -23,7 +23,7 @@ public class AlunoDao {
     public void alterar(Aluno aluno) {
         em.merge(aluno);
     }
-    public List listarAprovados() {
-        return em.createQuery("Select a From Aluno a Where ").getResultList();
+    public List<Aluno> listarAprovados() {
+        return em.createQuery("Select a From Aluno a Where ( a.nota1 + a.nota2 + a.nota3 )/3 >= 6").getResultList();
     }
 }
